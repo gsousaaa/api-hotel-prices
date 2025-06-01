@@ -30,8 +30,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
-        'password_hash',
-        'remember_token',
+        'password_hash'
     ];
 
     /**
@@ -40,16 +39,21 @@ class User extends Authenticatable implements JWTSubject
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password_hash' => 'hashed',
     ];
 
     public function getJWTCustomClaims()
+    {
+        return [
+            'id' => $this->id,
+            'role' => $this->role,
+            'email' => $this->email,
+            'company_id' => $this->company_id
+        ];
+    }
+
+    public function getJWTIdentifier()
 {
-    return [
-        'id' => $this->id,
-        'role' => $this->role,
-        'email' => $this->email,
-    ];
+    return $this->getKey();
 }
 }
