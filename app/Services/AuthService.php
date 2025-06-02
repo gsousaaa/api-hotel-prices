@@ -4,14 +4,9 @@ namespace App\Services;
 
 use App\Enums\UserRole;
 use App\Repositories\UserRepository;
-use Exception;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\UnauthorizedException;
-use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use function PHPUnit\Framework\throwException;
+
 
 class AuthService
 {
