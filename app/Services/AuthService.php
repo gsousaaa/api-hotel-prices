@@ -11,18 +11,19 @@ use Illuminate\Validation\ValidationException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use function PHPUnit\Framework\throwException;
 
-class AuthService 
+class AuthService
 {
     public function __construct(
         protected UserRepository $userRepository,
         protected CompanyRepository $companyRepository
-    ) {}
+    ) {
+    }
 
-    public function register(array $data) 
+    public function register(array $data)
     {
         $existsCompany = $this->userRepository->findByCnpj($data['cnpj']);
 
-        if($existsCompany) {
+        if ($existsCompany) {
             throw new Exception(`Empresa já cadastrada!`);
         }
 
@@ -33,11 +34,11 @@ class AuthService
 
         $existsUser = $this->userRepository->findByEmail($data['email']);
 
-        if($existsUser) {
+        if ($existsUser) {
             throw new Exception(`Usuário já cadastrado!`);
         }
 
-        $createdUser = $this->userRepository.create([
+        $createdUser = $this->userRepository . create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password_hash' => Hash::make($data['password']),
@@ -45,10 +46,17 @@ class AuthService
             'company_id' => $createdCompany->id
         ]);
 
-         return JWTAuth::fromUser($createdUser);
+        return JWTAuth::fromUser($createdUser);
     }
 
-    public function login(array $credentials) {
+    public function login(array $credentials)
+    {
+        $user = $this->userRepository->findByEmail($credentials['email']);
 
+        if (!$user || !Hash::check($credentials['password'], $user->password_hash)) {
+            throw new Exception(`Email e/ou senha incorretos!`);
+        }
+
+        return JWTAuth::fromUser($user);
     }
 }
