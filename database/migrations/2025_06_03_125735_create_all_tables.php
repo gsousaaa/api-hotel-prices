@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('cnpj')->unique();
             $table->string('uf', 2)->nullable();
             $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
         });
 
         // Tabela users
@@ -28,6 +29,7 @@ return new class extends Migration {
             $table->enum('role', ['ADMIN', 'MANAGER', 'EMPLOYEE']);
             $table->unsignedBigInteger('company_id');
             $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
 
             // Foreign Key
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
