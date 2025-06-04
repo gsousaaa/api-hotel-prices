@@ -59,7 +59,11 @@ class ApiService
 
         return $finalPrice;
     }
-
+    public function getCompanyRooms(int $companyId)
+    {
+        return $this->roomRepository->findCompanyRooms($companyId);
+    }
+    
     public function calculatePriceForecast(array $data)
     {
         $room = $this->roomRepository->findRoomById($data['room_id']);
