@@ -13,4 +13,8 @@ class RoomRepository
             ->get();
     }
 
+    public function findRoomById(int $roomId) {
+        return Room::where('id', $roomId)->first();
+    }
+
 }
