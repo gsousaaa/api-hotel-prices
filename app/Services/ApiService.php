@@ -85,7 +85,9 @@ class ApiService
             throw new BadRequestException('Nenhum preço foi encontrado!');
         }
 
-        if($lastPrice->effective_date === $effectiveDate) {
+        $existsForecast = $this->priceRepository->findPriceByDate($room->id, $effectiveDate); 
+
+        if ($existsForecast) {
             throw new BadRequestException('Esse quarto já possui uma previsão para o dia informado!');
         }
 
@@ -101,6 +103,6 @@ class ApiService
             'effective_date' => $effectiveDate
         ]);
 
-        return ['price' => $reajustedPrice];
+        return ['price' => round($reajustedPrice, 2)];
     }
 }
