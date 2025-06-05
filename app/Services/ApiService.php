@@ -63,7 +63,7 @@ class ApiService
     {
         return $this->roomRepository->findCompanyRooms($companyId);
     }
-    
+
     public function calculatePriceForecast(array $data)
     {
         $room = $this->roomRepository->findRoomById($data['room_id']);
@@ -83,6 +83,10 @@ class ApiService
 
         if (!$lastPrice) {
             throw new BadRequestException('Nenhum preço foi encontrado!');
+        }
+
+        if($lastPrice->effective_date === $effectiveDate) {
+            throw new BadRequestException('Esse quarto já possui uma previsão para o dia informado!');
         }
 
         $year = Carbon::parse($effectiveDate)->year;
