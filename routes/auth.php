@@ -2,5 +2,5 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/signIn', [AuthController::class, 'signIn']);
-Route::post('/signUp', [AuthController::class, 'signUp']);
+Route::post('/login', [AuthController::class, 'signIn']);
+Route::post('/register', [AuthController::class, 'signUp']);
