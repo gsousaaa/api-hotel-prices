@@ -20,7 +20,9 @@ class PriceRepository
 }
 
     public function findPriceByDate(int $roomId, string $effectiveDate) {
-
+        return Price::where('room_id', $roomId)
+        ->where('effective_date', $effectiveDate)
+        ->first();
     }
 
 }
