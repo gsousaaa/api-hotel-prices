@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "0a06470b-86fb-4279-abd3-5669d23f98aa",
+		"name": "api precos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33367224"
+	},
+	"item": [
+		{
+			"name": "rooms",
+			"protocolProfileBehavior": {
+				"followRedirects": true,
+				"disableUrlEncoding": false,
+				"disableCookies": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.1.0"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXV0aC9sb2dpbiIsImlhdCI6MTc0OTE1NTkwNywiZXhwIjoxNzQ5MTYzMTA3LCJuYmYiOjE3NDkxNTU5MDcsImp0aSI6Im5xWjNWbGg2MFRvVUJFeXYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyIsImlkIjoxLCJyb2xlIjoiTUFOQUdFUiIsImVtYWlsIjoiZ2xhdWNvQGdtYWlsLmNvbSIsImNvbXBhbnlfaWQiOjF9.pl0elv7txgLGfJkakIlcK4O9IyMKy8_zkNngW1kBLEA"
+					}
+				],
+				"url": {
+					"raw": "localhost:8000/api/rooms",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();\r",
+							"if (json.accessToken) {\r",
+							"    pm.environment.set(\"accessToken\", json.accessToken);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": true,
+				"disableUrlEncoding": false,
+				"disableCookies": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"teste@gmail.com\",\n\t\"password\": \"teste\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Price",
+			"protocolProfileBehavior": {
+				"followRedirects": true,
+				"disableUrlEncoding": false,
+				"disableCookies": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.1.0"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXV0aC9sb2dpbiIsImlhdCI6MTc0OTA4NTA5NSwiZXhwIjoxNzQ5MDkyMjk1LCJuYmYiOjE3NDkwODUwOTUsImp0aSI6IllBbDl1VGY4VUtwYmRzMzUiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyIsImlkIjoxLCJyb2xlIjoiTUFOQUdFUiIsImVtYWlsIjoiZ2xhdWNvQGdtYWlsLmNvbSIsImNvbXBhbnlfaWQiOjF9.JHWRkjUTM6JZnewuUCyGEUQvtLczIM3P1YUIeVDhb7Q"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"effectiveDate\": \"2025-06-08\",\n\t\"occupancyRate\": 95\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/rooms/1/price",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"rooms",
+						"1",
+						"price"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sign up",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();\r",
+							"if (json.accessToken) {\r",
+							"    pm.environment.set(\"accessToken\", json.accessToken);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": true,
+				"disableUrlEncoding": false,
+				"disableCookies": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"company_name\": \"Hotel teste\",\n\t\"cnpj\": \"00.000.000/0001-00\",\n\t\"uf\": \"RN\",\n\t\"name\": \"User teste\",\n\t\"email\": \"teste@gmail.com\",\n\t\"password\": \"teste\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API FERIADOS",
+			"protocolProfileBehavior": {
+				"followRedirects": true,
+				"disableUrlEncoding": false,
+				"disableCookies": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.1.0"
+					}
+				],
+				"url": {
+					"raw": "https://api.invertexto.com/v1/holidays/2025?token=&state=RN",
+					"protocol": "https",
+					"host": [
+						"api",
+						"invertexto",
+						"com"
+					],
+					"path": [
+						"v1",
+						"holidays",
+						"2025"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": ""
+						},
+						{
+							"key": "state",
+							"value": "RN"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
