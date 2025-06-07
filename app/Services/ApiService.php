@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Clients\ApiInvertexto;
 use App\Exceptions\BadRequestException;
+use App\Exceptions\NotFoundException;
 use App\Repositories\PriceRepository;
 use App\Repositories\RoomRepository;
 use Carbon\Carbon;
@@ -76,20 +77,20 @@ class ApiService
         }
 
         if (!$room || $room->company_id !== $data['company_id']) {
-            throw new BadRequestException('Quarto não encontrado!');
+            throw new NotFoundException(message: 'Quarto não encontrado!');
         }
 
         $lastPrice = $this->priceRepository->findLastPrice($room->id);
 
         if (!$lastPrice) {
-            throw new BadRequestException('Nenhum preço foi encontrado!');
+            throw new NotFoundException('Nenhum preço foi encontrado!');
         }
 
-        $existsForecast = $this->priceRepository->findPriceByDate($room->id, $effectiveDate); 
+      //  $existsForecast = $this->priceRepository->findPriceByDate($room->id, $effectiveDate); 
 
-        if ($existsForecast) {
-            throw new BadRequestException('Esse quarto já possui uma previsão para o dia informado!');
-        }
+        //if ($existsForecast) {
+          //  throw new BadRequestException('Esse quarto já possui uma previsão para o dia informado!');
+       // }
 
         $year = Carbon::parse($effectiveDate)->year;
         $holidays = $this->apiInvertexto->findHolidays($year, $room->company->uf);
@@ -97,12 +98,12 @@ class ApiService
 
         $reajustedPrice = $this->calculatePrice($isDayOff, $data['occupancyRate'], $room->type, $lastPrice->price);
 
-        $this->priceRepository->createPrice([
+        $price = $this->priceRepository->createPrice([
             'room_id' => $data['room_id'],
             'price' => $reajustedPrice,
             'effective_date' => $effectiveDate
         ]);
 
-        return ['price' => round($reajustedPrice, 2)];
+        return ['price' => round($reajustedPrice, 2), 'isDayOff' => $isDayOff, 'effectiveDate' => $effectiveDate, 'created_at' => $price->created_at];
     }
 }
