@@ -26,13 +26,21 @@ class User extends Authenticatable implements JWTSubject
     protected $table = 'users';
     protected $hidden = ['password'];
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function getJWTCustomClaims()
     {
+        $company = $this->company;
         return [
             'id' => $this->id,
             'role' => $this->role,
             'email' => $this->email,
-            'company_id' => $this->company_id
+            'company_id' => $this->company_id,
+            'name' => $this->name,
+            'company_name' => $company?->name
         ];
     }
     public function getJWTIdentifier()
