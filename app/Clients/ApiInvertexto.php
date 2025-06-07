@@ -9,16 +9,12 @@ class ApiInvertexto
 {
     public function findHolidays(int $year, string|null $state)
     {
-        try{
-            $url = "https://api.invertexto.com/v1/holidays/$year";
-            $response = Http::get($url, [
-                'token' => env('API_INVERTEXTO_TOKEN'),
-                'state' => $state
-            ])->throw();
+        $url = "https://api.invertexto.com/v1/holidays/$year";
+        $response = Http::get($url, [
+            'token' => env('API_INVERTEXTO_TOKEN'),
+            'state' => $state
+        ])->throw();
 
-            return $response->json();
-        } catch(Exception $err) {
-            throw new BadRequestException('Erro ao buscar feriados');
-        }
+        return $response->json();
     }
 }
