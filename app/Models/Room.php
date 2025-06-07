@@ -17,7 +17,7 @@ class Room extends Model
 
     public function prices()
     {
-        return $this->hasMany(Price::class)->orderByDesc('effective_date');
+        return $this->hasMany(Price::class)->orderByDesc('created_at');
     }
 
     public function company()
